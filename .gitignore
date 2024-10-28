@@ -1,0 +1,169 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+subutitles/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.vs/
+.history/
+
+# Testing
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Documentation
+docs/_build/
+site/
+docs/_autosummary/
+
+# Logs and Databases
+*.log
+*.sqlite
+*.db
+logs/
+*.log.*
+
+# Project-specific
+subtitles/
+downloads/
+temp/
+.cache/
+*.mp4
+*.webm
+*.mkv
+*.srt
+*.vtt
+*.ass
+*.ssa
+*.sub
+cookies.txt
+config.yaml
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build and Packaging
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.dylib
+*.dll
+*.exe
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# Code Coverage
+.coverage.*
+*.cover.*
+coverage.*
+.coveragerc
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# mkdocs
+site/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Profiling
+*.prof
+*.lprof
+
+# FFmpeg
+*.ffindex
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# Local development
+local_settings.py
+local_config.yaml
+dev_config.yaml
+test_config.yaml

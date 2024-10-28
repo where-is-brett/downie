@@ -1,0 +1,58 @@
+site_name: Downie Documentation
+site_description: Documentation for Downie, an advanced video and subtitle downloader
+repo_url: https://github.com/where-is-brett/downie
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Guides:
+    - Installation: guides/installation.md
+    - Quick Start: guides/quickstart.md
+    - Advanced Usage: guides/advanced-usage.md
+    - Configuration: guides/configuration.md
+  - API Reference:
+    - Downloader: api/downloader.md
+    - Processor: api/processor.md
+    - Subtitle: api/subtitle.md
+  - Contributing:
+    - Development Setup: contributing/development.md
+    - Code Style: contributing/code-style.md
+    - Testing: contributing/testing.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+          selection:
+            docstring_style: google
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/where-is-brett/downie
+      name: Downie on GitHub
+
+copyright: Copyright &copy; 2024 Brett Yang
