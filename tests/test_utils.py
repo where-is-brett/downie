@@ -1,26 +1,38 @@
 # tests/test_utils.py
-import pytest
-from downie.utils import ffmpeg, filesystem
 import subprocess
+
+import pytest
+
+from downie.utils import ffmpeg, filesystem
+
 
 class TestFFmpegUtils:
     @pytest.fixture
     def sample_video(self, temp_dir):
         """Create a valid sample video file for testing."""
         video_path = temp_dir / "sample.mp4"
-        
+
         # Create a 1-second test video using ffmpeg
-        subprocess.run([
-            'ffmpeg',
-            '-f', 'lavfi',  # Use the lavfi input virtual device
-            '-i', 'testsrc=duration=1:size=1280x720:rate=30',  # Create test pattern
-            '-f', 'lavfi',
-            '-i', 'sine=frequency=1000:duration=1',  # Create test audio
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
-            str(video_path)
-        ], capture_output=True)
-        
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-f",
+                "lavfi",  # Use the lavfi input virtual device
+                "-i",
+                "testsrc=duration=1:size=1280x720:rate=30",  # Create test pattern
+                "-f",
+                "lavfi",
+                "-i",
+                "sine=frequency=1000:duration=1",  # Create test audio
+                "-c:v",
+                "libx264",
+                "-c:a",
+                "aac",
+                str(video_path),
+            ],
+            capture_output=True,
+        )
+
         return video_path
 
     @pytest.mark.utils
@@ -31,27 +43,32 @@ class TestFFmpegUtils:
     @pytest.mark.utils
     def test_codec_support(self):
         """Test codec support checking."""
-        assert ffmpeg.check_codec_support('libx264')
-        assert not ffmpeg.check_codec_support('nonexistent_codec')
+        assert ffmpeg.check_codec_support("libx264")
+        assert not ffmpeg.check_codec_support("nonexistent_codec")
 
     @pytest.mark.utils
     def test_video_info(self, sample_video):
         """Test video information extraction."""
         info = ffmpeg.get_video_info(sample_video)
-        
+
         # Verify basic video information
-        assert 'streams' in info
-        assert 'format' in info
-        
+        assert "streams" in info
+        assert "format" in info
+
         # Find video stream
-        video_stream = next((s for s in info['streams'] if s['codec_type'] == 'video'), None)
+        video_stream = next(
+            (s for s in info["streams"] if s["codec_type"] == "video"), None
+        )
         assert video_stream is not None
-        assert video_stream['width'] == 1280
-        assert video_stream['height'] == 720
-        
+        assert video_stream["width"] == 1280
+        assert video_stream["height"] == 720
+
         # Find audio stream
-        audio_stream = next((s for s in info['streams'] if s['codec_type'] == 'audio'), None)
+        audio_stream = next(
+            (s for s in info["streams"] if s["codec_type"] == "audio"), None
+        )
         assert audio_stream is not None
+
 
 class TestFilesystemUtils:
     @pytest.mark.utils

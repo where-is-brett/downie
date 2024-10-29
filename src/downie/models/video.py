@@ -1,12 +1,14 @@
 # src/downie/models/video.py
 from dataclasses import dataclass
-from typing import Optional, List
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+from typing import List, Optional
+
 
 @dataclass
 class VideoMetadata:
     """Video metadata information."""
+
     title: str
     duration: Optional[float]
     upload_date: Optional[datetime]
@@ -27,9 +29,11 @@ class VideoMetadata:
     acodec: Optional[str]
     filesize: Optional[int]
 
+
 @dataclass
 class DownloadResult:
     """Download result information."""
+
     success: bool
     filepath: Optional[Path]
     error: Optional[str]

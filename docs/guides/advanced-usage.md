@@ -10,13 +10,13 @@ Use complex format selectors to get exactly what you want:
 
 ```bash
 # Select best MP4 format under 1080p
-downie download "URL" -f 'bestvideo[ext=mp4][height<=1080]+bestaudio[ext=m4a]/best[ext=mp4]/best'
+downie video download "URL" -f 'bestvideo[ext=mp4][height<=1080]+bestaudio[ext=m4a]/best[ext=mp4]/best'
 
 # Prefer VP9 codec
-downie download "URL" -f 'bestvideo[vcodec^=vp9]+bestaudio/best'
+downie video download "URL" -f 'bestvideo[vcodec^=vp9]+bestaudio/best'
 
 # Download specific format
-downie download "URL" -f 137+140
+downie video download "URL" -f 137+140
 ```
 
 ### Video Processing Pipeline
@@ -24,7 +24,7 @@ downie download "URL" -f 137+140
 Chain multiple processing operations:
 
 ```bash
-downie download "URL" \
+downie video download "URL" \
   --process \
   --resize 1920x1080 \
   --crop 1920:800:0:140 \
@@ -42,7 +42,7 @@ Advanced HDR to SDR conversion options:
 
 ```bash
 # Custom HDR to SDR settings
-downie download "URL" \
+downie video download "URL" \
   --process \
   --hdr-to-sdr \
   --tonemap-mode hable \
@@ -50,13 +50,58 @@ downie download "URL" \
   --dynamic-range 15
 
 # With color space conversion
-downie download "URL" \
+downie video download "URL" \
   --process \
   --hdr-to-sdr \
   --color-space bt709 \
   --color-primaries bt709 \
   --color-trc bt709
 ```
+
+## Rate Limiting and Proxies
+
+### Advanced Download Control
+
+```bash
+# Rate limiting with burst
+downie video download "URL" \
+  --limit-rate 1M \
+  --limit-rate-burst 5M \
+  --sleep-interval 2 \
+  --max-sleep-interval 10
+
+# With proxy rotation
+downie video download "URL" \
+  --proxy-file proxies.txt \
+  --proxy-rotation-interval 30
+```
+
+### Proxy Configuration
+
+```bash
+# Multiple proxy types
+downie video download "URL" \
+  --http-proxy http://proxy1:8080 \
+  --https-proxy https://proxy2:8443 \
+  --socks-proxy socks5://proxy3:1080
+```
+
+## Authentication and Cookies
+
+### Complex Authentication
+
+```bash
+# Using cookies and authentication
+downie video download "URL" \
+  --cookies cookies.txt \
+  --username "$USERNAME" \
+  --password "$PASSWORD" \
+  --two-factor "$2FA_CODE" \
+  --netrc
+```
+
+# Planned Features
+The following features are currently under development and will be available in future releases:
 
 ## Batch Processing
 
@@ -81,13 +126,13 @@ downie batch urls.txt \
 
 ```bash
 # Download playlist with specific items
-downie download "PLAYLIST_URL" \
+downie video download "PLAYLIST_URL" \
   --playlist-items 1-3,7,10-12 \
   --playlist-reverse \
   --playlist-random
 
 # Process entire playlist
-downie download "PLAYLIST_URL" \
+downie video download "PLAYLIST_URL" \
   --process \
   --resize 1280x720 \
   --output "playlist/%(playlist_title)s/%(title)s.%(ext)s"
@@ -99,7 +144,7 @@ downie download "PLAYLIST_URL" \
 
 ```bash
 # Download, convert, and merge subtitles
-subtitle-dl download "URL" \
+downie subtitle download "URL" \
   --languages en,es,fr \
   --convert-srt \
   --fix-encoding \
@@ -108,7 +153,7 @@ subtitle-dl download "URL" \
   --output-format "%(title)s.%(lang)s.%(ext)s"
 
 # Download with timing adjustment
-subtitle-dl download "URL" \
+downie subtitle download "URL" \
   --languages en \
   --time-offset -2.5 \
   --split-at "00:05:00,00:10:00" \
@@ -136,11 +181,11 @@ downie extract-subs "video.mkv" \
 
 ```bash
 # Complex output structure
-downie download "URL" \
+downie video download "URL" \
   --output "%(uploader)s/%(playlist_title)s/%(upload_date)s_%(title)s_%(resolution)s.%(ext)s"
 
 # With custom formatting
-downie download "URL" \
+downie video download "URL" \
   --output "%(title).50s_%(height)dp_%(fps)dfps.%(ext)s" \
   --output-na-placeholder "UNKNOWN"
 ```
@@ -153,47 +198,6 @@ downie download "URL" \
 - Time: `duration`, `upload_date`, `timestamp`
 - Other: `like_count`, `view_count`, `comment_count`
 
-## Rate Limiting and Proxies
-
-### Advanced Download Control
-
-```bash
-# Rate limiting with burst
-downie download "URL" \
-  --limit-rate 1M \
-  --limit-rate-burst 5M \
-  --sleep-interval 2 \
-  --max-sleep-interval 10
-
-# With proxy rotation
-downie download "URL" \
-  --proxy-file proxies.txt \
-  --proxy-rotation-interval 30
-```
-
-### Proxy Configuration
-
-```bash
-# Multiple proxy types
-downie download "URL" \
-  --http-proxy http://proxy1:8080 \
-  --https-proxy https://proxy2:8443 \
-  --socks-proxy socks5://proxy3:1080
-```
-
-## Authentication and Cookies
-
-### Complex Authentication
-
-```bash
-# Using cookies and authentication
-downie download "URL" \
-  --cookies cookies.txt \
-  --username "$USERNAME" \
-  --password "$PASSWORD" \
-  --two-factor "$2FA_CODE" \
-  --netrc
-```
 
 ### Cookie Management
 
@@ -205,7 +209,7 @@ downie cookies export \
   --output cookies.txt
 
 # Use cookies with specific domains
-downie download "URL" \
+downie video download "URL" \
   --cookies-from-browser firefox \
   --cookies-domain youtube.com,google.com
 ```
@@ -216,7 +220,7 @@ downie download "URL" \
 
 ```bash
 # Configure retries
-downie download "URL" \
+downie video download "URL" \
   --retries 5 \
   --retry-sleep 10 \
   --retry-sleep-multiplier 2 \
@@ -227,7 +231,7 @@ downie download "URL" \
 
 ```bash
 # Handle fragmented downloads
-downie download "URL" \
+downie video download "URL" \
   --fragment-retries 10 \
   --skip-unavailable-fragments \
   --abort-on-unavailable-fragment \
@@ -240,13 +244,13 @@ downie download "URL" \
 
 ```bash
 # Detailed logging
-downie download "URL" \
+downie video download "URL" \
   --log-level debug \
   --log-file download.log \
   --progress-template "%(progress)s%(speed)s%(eta)s"
 
 # With statistics
-downie download "URL" \
+downie video download "URL" \
   --print-traffic \
   --print-stats \
   --stats-interval 5

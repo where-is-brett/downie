@@ -34,13 +34,13 @@ pip install downie
 
 ```bash
 # Download video
-downie download "https://youtube.com/watch?v=example"
+downie video download "https://youtube.com/watch?v=example"
 
 # Download with processing
-downie download "https://youtube.com/watch?v=example" --process --resize 1080p
+downie video download "https://youtube.com/watch?v=example" --process --resize 1080p
 
 # Download subtitles
-subtitle-dl download "https://youtube.com/watch?v=example" -l en,es
+downie subtitle download "https://youtube.com/watch?v=example" -l en,es
 ```
 
 ## Documentation

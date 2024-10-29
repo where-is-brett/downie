@@ -1,7 +1,9 @@
 # tests/conftest.py
-import pytest
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+import pytest
+
 
 @pytest.fixture
 def temp_dir():
@@ -9,14 +11,16 @@ def temp_dir():
     with tempfile.TemporaryDirectory() as tmp_dir:
         yield Path(tmp_dir)
 
+
 @pytest.fixture
 def sample_video(temp_dir):
     """Create a sample video file for testing."""
     video_path = temp_dir / "sample.mp4"
     # Create a minimal valid MP4 file
-    with open(video_path, 'wb') as f:
-        f.write(bytes.fromhex('00000018667479706D703432'))
+    with open(video_path, "wb") as f:
+        f.write(bytes.fromhex("00000018667479706D703432"))
     return video_path
+
 
 @pytest.fixture
 def sample_subtitle(temp_dir):
@@ -32,28 +36,31 @@ For testing purposes
 Second subtitle entry
 Multiple lines
 """
-    subtitle_path.write_text(content, encoding='utf-8')
+    subtitle_path.write_text(content, encoding="utf-8")
     return subtitle_path
+
 
 @pytest.fixture
 def mock_response():
     """Create a mock video info response."""
     return {
-        'title': 'Test Video',
-        'duration': 100,
-        'upload_date': '20240101',
-        'uploader': 'Test Channel',
-        'view_count': 1000,
-        'like_count': 100,
-        'description': 'Test Description',
-        'formats': [{
-            'format_id': '22',
-            'ext': 'mp4',
-            'width': 1920,
-            'height': 1080,
-            'fps': 30,
-            'vcodec': 'h264',
-            'acodec': 'aac',
-            'filesize': 1024*1024
-        }]
+        "title": "Test Video",
+        "duration": 100,
+        "upload_date": "20240101",
+        "uploader": "Test Channel",
+        "view_count": 1000,
+        "like_count": 100,
+        "description": "Test Description",
+        "formats": [
+            {
+                "format_id": "22",
+                "ext": "mp4",
+                "width": 1920,
+                "height": 1080,
+                "fps": 30,
+                "vcodec": "h264",
+                "acodec": "aac",
+                "filesize": 1024 * 1024,
+            }
+        ],
     }

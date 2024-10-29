@@ -47,16 +47,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e ".[dev,test]"
 
-    # - name: Run linting
-    #   run: |
-    #     black . --check
-    #     isort . --check-only
-    #     flake8 .
-    #     mypy src/
-
     - name: Run tests
       run: |
-        pytest --cov=downie --cov-report=xml
+        pytest --cov=downie --cov-report=xml -v --tb=short
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3

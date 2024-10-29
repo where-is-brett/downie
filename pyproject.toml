@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "downie"
-dynamic = ["version"]
+version = "0.2.0"
 description = "Advanced video and subtitle downloader"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -67,8 +67,7 @@ docs = [
 ]
 
 [project.scripts]
-downie = "downie.cli.download:main"
-subtitle-dl = "downie.cli.subtitle:main"
+downie = "downie.cli.main:cli"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

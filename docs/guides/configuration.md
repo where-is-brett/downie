@@ -1,6 +1,6 @@
 # Configuration Guide
 
-Downie can be configured using a YAML configuration file and command-line options.
+Downie can be configured using a YAML configuration file and command-line options. It provides both video downloading and subtitle management capabilities.
 
 ## Configuration File
 
@@ -11,98 +11,107 @@ The default configuration file is located at:
 ### Example Configuration
 
 ```yaml
-download:
+video:
   output_dir: ~/Downloads/videos
-  max_concurrent_downloads: 3
-  default_quality: 1080p
-  rate_limit: null
+  quality: best
+  format_id: null
   proxy: null
-  verify_ssl: true
-  retries: 3
-
+  limit_speed: null
+  username: null
+  password: null
+  cookies_file: null
+  
 processing:
+  crop: null
+  resize: null
+  rotate: null
+  fps: null
+  remove_audio: false
+  extract_audio: false
+  audio_format: mp3
   video_codec: libx264
   audio_codec: aac
-  thumbnail_size: 1280x720
-  max_processing_threads: 2
-  temp_dir: ~/.cache/downie
-  default_format: mp4
+  video_bitrate: null
+  audio_bitrate: null
 
 subtitles:
+  output_dir: ~/Downloads/subtitles
   languages: [en]
-  download_auto: false
+  formats: [srt]
+  auto_generated: false
   convert_to_srt: true
   fix_encoding: true
-  remove_formatting: false
-
-storage:
-  max_temp_size: 10GB
-  cleanup_after_days: 7
-  min_free_space: 5GB
+  merge_subtitles: false
 ```
 
 ## Configuration Options
 
-### Download Settings
+### Video Download Settings
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `output_dir` | Default download directory | `~/Downloads/videos` |
-| `max_concurrent_downloads` | Maximum simultaneous downloads | 3 |
-| `default_quality` | Default video quality | 1080p |
-| `rate_limit` | Download speed limit | None |
+| `output_dir` | Download directory for videos | ~/Downloads/videos |
+| `quality` | Video quality (e.g., 720p, 1080p, best) | best |
+| `format_id` | Specific format ID to download | None |
 | `proxy` | Proxy URL | None |
-| `verify_ssl` | Verify SSL certificates | True |
-| `retries` | Number of retry attempts | 3 |
+| `limit_speed` | Download speed limit (e.g., 1M, 500K) | None |
+| `username` | Account username | None |
+| `password` | Account password | None |
+| `cookies_file` | Path to cookies file | None |
 
-### Processing Settings
+### Video Processing Settings
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `video_codec` | Default video codec | libx264 |
-| `audio_codec` | Default audio codec | aac |
-| `thumbnail_size` | Thumbnail resolution | 1280x720 |
-| `max_processing_threads` | Maximum processing threads | 2 |
-| `temp_dir` | Temporary file directory | ~/.cache/downie |
-| `default_format` | Default output format | mp4 |
+| `crop` | Crop video (width:height:x:y) | None |
+| `resize` | Resize video (widthxheight) | None |
+| `rotate` | Rotate video (degrees) | None |
+| `fps` | Target FPS | None |
+| `remove_audio` | Remove audio track | False |
+| `extract_audio` | Extract audio only | False |
+| `audio_format` | Audio format for extraction | mp3 |
+| `video_codec` | Video codec (e.g., libx264, libx265) | libx264 |
+| `audio_codec` | Audio codec (e.g., aac, mp3) | aac |
+| `video_bitrate` | Video bitrate (e.g., 5M) | None |
+| `audio_bitrate` | Audio bitrate (e.g., 192k) | None |
 
 ### Subtitle Settings
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `languages` | Default subtitle languages | [en] |
-| `download_auto` | Download auto-generated subtitles | False |
+| `output_dir` | Download directory for subtitles | ~/Downloads/subtitles |
+| `languages` | Subtitle languages to download | [en] |
+| `formats` | Subtitle formats to download | [srt] |
+| `auto_generated` | Include auto-generated subtitles | False |
 | `convert_to_srt` | Convert subtitles to SRT | True |
 | `fix_encoding` | Fix subtitle encoding issues | True |
-| `remove_formatting` | Remove subtitle formatting | False |
+| `merge_subtitles` | Merge all subtitle files into one | False |
 
-### Storage Settings
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `max_temp_size` | Maximum temporary storage | 10GB |
-| `cleanup_after_days` | Auto-cleanup after days | 7 |
-| `min_free_space` | Minimum required free space | 5GB |
 
 ## Environment Variables
 
 You can also configure Downie using environment variables:
 
 ```bash
-# Download settings
+# Video download settings
 export downie_OUTPUT_DIR=~/Videos
 export downie_QUALITY=720p
 export downie_PROXY=http://proxy:8080
+export downie_LIMIT_SPEED=1M
 
 # Processing settings
 export downie_VIDEO_CODEC=libx264
 export downie_AUDIO_CODEC=aac
+export downie_AUDIO_FORMAT=mp3
 
 # Subtitle settings
+export downie_SUBTITLE_DIR=~/Subtitles
 export downie_SUBTITLE_LANGS=en,es
+export downie_SUBTITLE_FORMATS=srt,vtt
+export downie_MERGE_SUBTITLES=true
 ```
 
-## Command-Line Priority
+## Configuration Priority
 
 Configuration priority (highest to lowest):
 1. Command-line arguments
@@ -120,81 +129,40 @@ mkdir -p ~/.config/downie
 downie config init
 ```
 
-## Validating Configuration
-
-```bash
-# Validate current configuration
-downie config validate
-
-# Show current configuration
-downie config show
-```
-
 ## Best Practices
 
 1. **Start with Defaults**: Begin with the default configuration and modify as needed
 2. **Version Control**: Keep your configuration in version control for backup
 3. **Environment-Specific**: Use different configurations for different environments
-4. **Security**: Never commit sensitive information (like proxy passwords) to version control
+4. **Security**: Never commit sensitive information (like passwords) to version control
 
 ## Troubleshooting
 
 ### Common Configuration Issues
 
-1. **Invalid YAML Syntax**
+1. **Invalid URL**
    ```
-   Error: Invalid YAML syntax in config file
+   Error: Invalid URL: [url]
    ```
-   Solution: Use a YAML validator to check syntax
+   Solution: Check if the URL is properly formatted and supported
 
 2. **Permission Issues**
    ```
-   Error: Cannot write to config directory
+   Error: Cannot write to output directory
    ```
    Solution: Check directory permissions
 
-3. **Invalid Values**
+3. **Download Failures**
    ```
-   Error: Invalid value for max_concurrent_downloads
+   Error: Download failed
    ```
-   Solution: Check value types and ranges in documentation
+   Solution: Check network connection and try with --proxy if behind firewall
 
-## Advanced Configuration
-
-### Custom Format Strings
-
-```yaml
-download:
-  format_strings:
-    hd: "bestvideo[height<=1080]+bestaudio/best"
-    sd: "bestvideo[height<=720]+bestaudio/best"
-    mobile: "bestvideo[height<=480]+bestaudio/best"
-```
-
-### Processing Profiles
-
-```yaml
-processing:
-  profiles:
-    mobile:
-      resize: 720x480
-      fps: 30
-      video_codec: libx264
-    web:
-      resize: 1280x720
-      fps: 60
-      video_codec: libvpx-vp9
-```
-
-### Proxy Configuration
-
-```yaml
-download:
-  proxy:
-    http: http://proxy:8080
-    https: https://proxy:8080
-    socks5: socks5://proxy:1080
-```
+4. **Processing Errors**
+   ```
+   Error: Processing failed
+   ```
+   Solution: Verify ffmpeg installation and processing options
 
 ## Next Steps
 

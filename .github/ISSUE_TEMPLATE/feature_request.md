@@ -19,7 +19,7 @@ A clear and concise description of any alternative solutions or features you've 
 How would this feature be used? Please provide example commands or code:
 
 ```bash
-downie download --new-feature value
+downie --new-feature value
 ```
 
 **Additional context**

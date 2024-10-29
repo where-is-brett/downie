@@ -8,43 +8,43 @@ Get started with Downie's basic features and commands.
 
 ```bash
 # Basic download (best quality)
-downie download "https://youtube.com/watch?v=example"
+downie video download "https://youtube.com/watch?v=example"
 
 # Specify quality
-downie download "https://youtube.com/watch?v=example" -q 1080p
+downie video download "https://youtube.com/watch?v=example" -q 1080p
 
 # Specify output directory
-downie download "https://youtube.com/watch?v=example" -o ~/Downloads/videos
+downie video download "https://youtube.com/watch?v=example" -o ~/Downloads/videos
 ```
 
 ### Download Subtitles
 
 ```bash
 # Download English subtitles
-subtitle-dl download "https://youtube.com/watch?v=example"
+downie subtitle download "https://youtube.com/watch?v=example"
 
 # Download multiple languages
-subtitle-dl download "https://youtube.com/watch?v=example" -l "en,es,fr"
+downie subtitle download "https://youtube.com/watch?v=example" -l "en,es,fr"
 
 # Convert to SRT format
-subtitle-dl download "https://youtube.com/watch?v=example" --convert-srt
+downie subtitle download "https://youtube.com/watch?v=example" --convert-srt
 ```
 
 ### Process Videos
 
 ```bash
 # Resize video
-downie download "https://youtube.com/watch?v=example" \
+downie video download "https://youtube.com/watch?v=example" \
   --process \
   --resize 1920x1080
 
 # Convert HDR to SDR
-downie download "https://youtube.com/watch?v=example" \
+downie video download "https://youtube.com/watch?v=example" \
   --process \
   --hdr-to-sdr
 
 # Extract audio
-downie download "https://youtube.com/watch?v=example" \
+downie video download "https://youtube.com/watch?v=example" \
   --extract-audio \
   --audio-format mp3
 ```
@@ -54,7 +54,7 @@ downie download "https://youtube.com/watch?v=example" \
 Downie commands follow this pattern:
 ```bash
 downie <command> [options] URL
-subtitle-dl <command> [options] URL
+downie subtitle <command> [options] URL
 ```
 
 Common options:
@@ -68,20 +68,20 @@ Common options:
 
 ### Download Playlist
 ```bash
-downie download "https://youtube.com/playlist?list=example" \
+downie video download "https://youtube.com/playlist?list=example" \
   -o playlist \
   -q 720p
 ```
 
 ### Download with Custom Format
 ```bash
-downie download "https://youtube.com/watch?v=example" \
+downie video download "https://youtube.com/watch?v=example" \
   -f "bestvideo[height<=1080]+bestaudio/best"
 ```
 
 ### Process and Convert
 ```bash
-downie download "https://youtube.com/watch?v=example" \
+downie video download "https://youtube.com/watch?v=example" \
   --process \
   --resize 1280x720 \
   --fps 30 \
