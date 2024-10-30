@@ -1,14 +1,5 @@
 # Changelog
 
-## [v0.2.1] (2024-01-30)
-### 🔒 Security
-- Updated Jinja2 dependency to >=3.1.3 to address CVE-2019-8341
-- Implemented security policy file for automated vulnerability scanning
-
-### 🛠 Infrastructure
-- Enhanced CI/CD pipeline with modern security scanning
-- Updated development dependencies
-
 ## [v0.2.0] (2024-10-29)
 ### ⚠️ Breaking Changes
 #### CLI Command Structure Redesign
