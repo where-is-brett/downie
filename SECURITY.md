@@ -13,7 +13,7 @@
 We take security seriously. If you discover a security vulnerability in Downie, please follow these steps:
 
 1. **DO NOT** create a public GitHub issue
-2. Send an email to [security@example.com](mailto:security@example.com)
+2. Send an email to [hello@brettyang.au](mailto:hello@brettyang.au)
 3. Include:
    - Description of the vulnerability
    - Steps to reproduce
