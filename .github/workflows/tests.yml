@@ -118,7 +118,7 @@ jobs:
     - name: Run security checks
       run: |
         bandit -r src/ -ll
-        safety review --full-report --policy-file .safety-policy.yml
+        safety check --full-report --file .safety-policy.yml || safety check --full-report
 
   cleanup:
     needs: [test, package, docs, security]

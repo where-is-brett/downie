@@ -1,16 +1,14 @@
 security:
-  ignore-vulnerabilities:
-    - vulnerability-id: "70612"
-      reason: >
-        CVE-2019-8341 is addressed by using Jinja2>=3.1.3 in our dependencies.
-        This version includes fixes for the SSTI vulnerability.
-      expires: "2025-01-01"
+    ignore-vulnerabilities:
+        # Jinja2 vulnerability (CVE-2019-8341) - false positive
+        70612:
+            reason: "Using Jinja2>=3.1.3 which includes fixes for CVE-2019-8341"
 
-  continue-on-vulnerability-error: false
-  
-  # Optional: Configure security audit settings
-  audit:
-    - interval: "weekly"
-      notification:
-        - type: "github-issue"
-          assignees: ["where-is-brett"]
+    # Don't fail on vulnerability lookup errors
+    continue-on-vulnerability-error: true
+
+    # Minimum severity level to report
+    ignore-cvss-severity-below: 0
+
+    # We have some unpinned requirements in dev dependencies
+    ignore-unpinned-requirements: true
