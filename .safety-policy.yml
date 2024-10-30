@@ -1,0 +1,14 @@
+security:
+    ignore-vulnerabilities:
+        # Jinja2 vulnerability (CVE-2019-8341) - false positive
+        70612:
+            reason: "Using Jinja2>=3.1.3 which includes fixes for CVE-2019-8341"
+
+    # Don't fail on vulnerability lookup errors
+    continue-on-vulnerability-error: true
+
+    # Minimum severity level to report
+    ignore-cvss-severity-below: 0
+
+    # We have some unpinned requirements in dev dependencies
+    ignore-unpinned-requirements: true

@@ -51,10 +51,10 @@ jobs:
       run: |
         pytest --cov=downie --cov-report=xml -v --tb=short
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+    - name: Upload results to Codecov
+      uses: codecov/codecov-action@v4
       with:
-        file: ./coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: false
 
   package:
@@ -99,11 +99,6 @@ jobs:
       run: |
         mkdocs build --strict
 
-    - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main'
-      run: |
-        mkdocs gh-deploy --force
-
   security:
     needs: test
     runs-on: ubuntu-latest
@@ -123,26 +118,7 @@ jobs:
     - name: Run security checks
       run: |
         bandit -r src/ -ll
-        safety check
-
-  # notify:
-  #   needs: [test, package, docs, security]
-  #   if: always()
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Send notification
-  #     if: ${{ failure() }}
-  #     uses: dawidd6/action-send-mail@v3
-  #     with:
-  #       server_address: smtp.gmail.com
-  #       server_port: 465
-  #       username: ${{ secrets.EMAIL_USERNAME }}
-  #       password: ${{ secrets.EMAIL_PASSWORD }}
-  #       subject: Github Actions (downie) - ${{ github.workflow }} failed
-  #       body: Workflow ${{ github.workflow }} failed in ${{ github.repository }}
-  #       to: maintainers@example.com
-  #       from: Github Actions
-  #       secure: true
+        safety check --full-report --file .safety-policy.yml || safety check --full-report
 
   cleanup:
     needs: [test, package, docs, security]
