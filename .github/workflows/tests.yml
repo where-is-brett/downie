@@ -51,10 +51,10 @@ jobs:
       run: |
         pytest --cov=downie --cov-report=xml -v --tb=short
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+    - name: Upload results to Codecov
+      uses: codecov/codecov-action@v4
       with:
-        file: ./coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: false
 
   package:
